@@ -21,7 +21,3 @@ results in
   Logon/Logoff
     Account Lockout                         Success
 ```
-
-## todo:
-
-This is a very basic type/provider, discovery and prefetching aren't implemented.
