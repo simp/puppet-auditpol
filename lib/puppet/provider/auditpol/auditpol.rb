@@ -5,13 +5,17 @@ Puppet::Type.type(:auditpol).provide(:auditpol) do
 
   commands :auditpol => 'auditpol.exe'
 
+  def initialize(value={})
+    super(value)
+    @property_flush = {}
+  end
+
   def success
     @property_hash[:success]
   end
 
   def success=(value)
-    subcategory_name = resource[:subcategory]
-    auditpol('/set', "/subcategory:#{subcategory_name}", "/success:#{resource[:success]}")
+    @property_flush[:success] = value
   end
 
   def failure
@@ -19,8 +23,19 @@ Puppet::Type.type(:auditpol).provide(:auditpol) do
   end
 
   def failure=(value)
-    subcategory_name = resource[:subcategory]
-    auditpol('/set', "/subcategory:#{subcategory_name}", "/failure:#{resource[:failure]}")
+    @property_flush[:failure] = value
+  end
+
+  def flush
+    options = []
+    if @property_flush
+      (options << '/set')
+      (options << "/subcategory:#{resource[:subcategory]}")
+      (options << "/success:#{resource[:success]}") if @property_flush[:success]
+      (options << "/failure:#{resource[:failure]}") if @property_flush[:failure]
+    end
+    auditpol(options) unless options.empty?
+    @property_hash = resource.to_hash
   end
 
   def self.instances
