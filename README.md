@@ -5,7 +5,7 @@ puppet-auditpol is a Puppet type/provider to manage audit policies on Windows us
 ## example:
 
 ```puppet
-auditpol { 'Logon':
+auditpol { 'Account Lockout':
   success => 'enable',
   failure => 'disable',
 }
