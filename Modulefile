@@ -1,5 +1,5 @@
 name 'jonono-auditpol'
-version '0.1.2'
+version '0.1.3'
 summary 'manage Windows audit policies'
 description "This module is a type/provider to manage audit policies in
     Windows via auditpol.exe."
